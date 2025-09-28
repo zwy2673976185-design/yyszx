@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>接收端-带加载进度</title>
+  <style>
+    .float-btn {
+      position: fixed; z-index: 999 !important;
+      width: 60px; height: 60px;
+      border: 2px solid #fff; box-shadow: 0 3px 15px rgba(0,0,0,0.3);
+      background-image: url(https://i.imgs.ovh/2025/09/28/75fraO.jpeg);
+      background-size: cover; cursor: pointer;
+      right: 20px; top: 20px;
+    }
+    .float-window {
+      position: fixed; z-index: 998 !important;
+      width: 320px; top: 80px; right: 20px;
+      background: white; border-radius: 10px; box-shadow: 0 3px 15px rgba(0,0,0,0.2);
+      display: none; opacity: 0; transition: opacity 0.3s;
+    }
+    .float-window.active { display: block; opacity: 1; }
+    .window-header {
+      padding: 15px; background: #2563eb; color: white;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .progress {
+      padding: 15px; color: #333;
+    }
+    .business-container {
+      position: relative; z-index: 100;
+      width: 100%; min-height: calc(100vh - 100px);
+    }
+  </style>
+</head>
+<body>
+  <div class="business-container" id="content-container">
+    <h1 style="text-align: center; margin-top: 50px; color: #999;">等待接收文件...</h1>
+  </div>
+
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script>
+    // 悬浮窗初始化（含进度条）
+    (function initFloatWindow() {
+      const floatBtn = document.createElement('button');
+      floatBtn.className = 'float-btn';
+      floatBtn.style.right = '20px';
+      floatBtn.style.top = '20px';
+      document.body.appendChild(floatBtn);
+
+      const floatWindow = document.createElement('div');
+      floatWindow.className = 'float-window';
+      floatWindow.innerHTML = `
+        <div class="window-header">
+          加载进度
+          <button onclick="this.parentElement.parentElement.classList.remove('active')" style="background: none; border: none; color: white;">×</button>
+        </div>
+        <div class="progress" id="load-progress">
+          等待文件更新...
+        </div>
+      `;
+      document.body.appendChild(floatWindow);
+
+      floatBtn.onclick = () => floatWindow.classList.toggle('active');
+
+      // 拖拽逻辑
+      let isDragging = false;
+      let startX, startY, initialRight, initialTop;
+      floatBtn.addEventListener('touchstart', (e) => {
+        const touch = e.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+        initialRight = window.innerWidth - parseFloat(floatBtn.style.right) - floatBtn.offsetWidth;
+        initialTop = parseFloat(floatBtn.style.top) || 20;
+        isDragging = true;
+      }, { passive: false });
+      floatBtn.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        const touch = e.touches[0];
+        const moveX = touch.clientX - startX;
+        const moveY = touch.clientY - startY;
+        floatBtn.style.right = `${window.innerWidth - initialRight - moveX - floatBtn.offsetWidth}px`;
+        floatBtn.style.top = `${initialTop + moveY}px`;
+        e.preventDefault();
+      }, { passive: false });
+      floatBtn.addEventListener('touchend', () => {
+        isDragging = false;
+      });
+    })();
+
+    // 进度条更新函数
+    function updateProgress(text) {
+      const progressEl = document.getElementById('load-progress');
+      if (progressEl) {
+        progressEl.textContent = text;
+      }
+    }
+
+    // 实时同步与加载逻辑
+    const socket = io('https://resource-push-server-zwy.onrender.com');
+    const contentContainer = document.getElementById('content-container');
+    let lastFileUrl = '';
+
+    socket.on('file-updated', (newFileUrl) => {
+      if (newFileUrl === lastFileUrl) return;
+      lastFileUrl = newFileUrl;
+      updateProgress('开始加载文件...');
+
+      fetch(newFileUrl)
+        .then(res => {
+          if (!res.ok) throw new Error('文件加载失败');
+          updateProgress('解析文件内容...');
+          return res.text();
+        })
+        .then(html => {
+          contentContainer.innerHTML = html;
+          updateProgress('加载外部资源（CSS/JS）...');
+          loadExternalResources();
+        })
+        .catch(err => {
+          updateProgress('文件加载失败：' + err.message);
+          console.error(err);
+        });
+    });
+
+    function loadExternalResources() {
+      const links = contentContainer.querySelectorAll('link[rel="stylesheet"]');
+      const scripts = contentContainer.querySelectorAll('script[src]');
+      let loadedCount = 0;
+      const total = links.length + scripts.length;
+
+      // 加载CSS
+      links.forEach(link => {
+        const newLink = document.createElement('link');
+        newLink.rel = 'stylesheet';
+        newLink.href = link.href;
+        newLink.onload = () => {
+          loadedCount++;
+          updateProgress(`加载资源中... (${loadedCount}/${total})`);
+          if (loadedCount === total) {
+            updateProgress('执行内联脚本...');
+            setTimeout(executeInlineScripts, 300);
+          }
+        };
+        document.head.appendChild(newLink);
+      });
+
+      // 加载外部JS
+      scripts.forEach(script => {
+        const newScript = document.createElement('script');
+        newScript.src = script.src;
+        newScript.onload = () => {
+          loadedCount++;
+          updateProgress(`加载资源中... (${loadedCount}/${total})`);
+          if (loadedCount === total) {
+            updateProgress('执行内联脚本...');
+            setTimeout(executeInlineScripts, 300);
+          }
+        };
+        document.body.appendChild(newScript);
+      });
+
+      // 无外部资源时直接执行脚本
+      if (total === 0) {
+        updateProgress('执行内联脚本...');
+        setTimeout(executeInlineScripts, 300);
+      }
+    }
+
+    function executeInlineScripts() {
+      try {
+        const scripts = contentContainer.querySelectorAll('script:not([src])');
+        scripts.forEach(script => {
+          eval(script.textContent);
+        });
+        updateProgress('加载完成！');
+      } catch (err) {
+        updateProgress('脚本执行失败：' + err.message);
+        console.error(err);
+      }
+    }
+
+    socket.on('connect', () => {
+      updateProgress('连接服务器成功，等待文件更新...');
+      fetch('https://resource-push-server-zwy.onrender.com/getLatest')
+        .then(res => res.json())
+        .then(data => {
+          if (data.latestFileUrl) {
+            lastFileUrl = data.latestFileUrl;
+            updateProgress('开始加载最新文件...');
+            fetch(lastFileUrl).then(res => res.text()).then(html => {
+              contentContainer.innerHTML = html;
+              loadExternalResources();
+            });
+          }
+        });
+    });
+  </script>
+</body>
+</html>
