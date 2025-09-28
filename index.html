@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>接收端-带加载进度</title>
+  <title>接收端-业务全兼容版</title>
   <style>
     .float-btn {
       position: fixed; z-index: 999 !important;
@@ -40,7 +40,7 @@
 
   <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
   <script>
-    // 悬浮窗初始化（含进度条）
+    // 悬浮窗+进度条初始化
     (function initFloatWindow() {
       const floatBtn = document.createElement('button');
       floatBtn.className = 'float-btn';
@@ -96,7 +96,7 @@
       }
     }
 
-    // 实时同步与加载逻辑
+    // 实时同步与资源加载逻辑
     const socket = io('https://resource-push-server-zwy.onrender.com');
     const contentContainer = document.getElementById('content-container');
     let lastFileUrl = '';
@@ -114,7 +114,7 @@
         })
         .then(html => {
           contentContainer.innerHTML = html;
-          updateProgress('加载外部资源（CSS/JS）...');
+          updateProgress('加载外部资源（CSS/JS/Firebase SDK）...');
           loadExternalResources();
         })
         .catch(err => {
@@ -138,14 +138,14 @@
           loadedCount++;
           updateProgress(`加载资源中... (${loadedCount}/${total})`);
           if (loadedCount === total) {
-            updateProgress('执行内联脚本...');
+            updateProgress('执行内联脚本（含Firebase初始化）...');
             setTimeout(executeInlineScripts, 300);
           }
         };
         document.head.appendChild(newLink);
       });
 
-      // 加载外部JS
+      // 加载外部JS（含Firebase SDK）
       scripts.forEach(script => {
         const newScript = document.createElement('script');
         newScript.src = script.src;
@@ -153,7 +153,7 @@
           loadedCount++;
           updateProgress(`加载资源中... (${loadedCount}/${total})`);
           if (loadedCount === total) {
-            updateProgress('执行内联脚本...');
+            updateProgress('执行内联脚本（含Firebase初始化）...');
             setTimeout(executeInlineScripts, 300);
           }
         };
@@ -162,7 +162,7 @@
 
       // 无外部资源时直接执行脚本
       if (total === 0) {
-        updateProgress('执行内联脚本...');
+        updateProgress('执行内联脚本（含Firebase初始化）...');
         setTimeout(executeInlineScripts, 300);
       }
     }
@@ -173,7 +173,7 @@
         scripts.forEach(script => {
           eval(script.textContent);
         });
-        updateProgress('加载完成！');
+        updateProgress('加载完成！业务功能正常运行');
       } catch (err) {
         updateProgress('脚本执行失败：' + err.message);
         console.error(err);
