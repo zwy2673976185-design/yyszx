@@ -1,0 +1,26 @@
+// 1. 连接测试服务器（Auto Update），替换成你的Render测试服务器URL（例：https://auto-update-test.onrender.com）
+const testSocket = io("https://你的Render测试服务器URL.onrender.com");
+// 2. 动态HTML内容容器（替换成你页面中放内容的div的ID，确保内容能正常渲染）
+const testContentContainer = document.getElementById("你的测试内容容器ID");
+
+// 初始化：页面打开时，自动加载Auto Update服务器的最新HTML
+window.onload = async () => {
+  await loadLatestTestHtml();
+};
+
+// 核心函数：加载Auto Update服务器存储的最新HTML（适配任意上传的内容）
+async function loadLatestTestHtml() {
+  try {
+    const response = await fetch("https://auto-update-zj4.onrender.com/get-latest-test-html");
+    const latestTestHtml = await response.text();
+    testContentContainer.innerHTML = latestTestHtml; // 直接渲染最新内容
+  } catch (err) {
+    console.error("加载测试HTML失败，错误信息：", err);
+  }
+}
+
+// 监听更新：收到Auto Update服务器的“更新指令”后，自动重新加载最新内容
+testSocket.on('test-html-updated', (data) => {
+  console.log(data.msg);
+  loadLatestTestHtml(); // 无需用户操作，自动同步新内容
+});
