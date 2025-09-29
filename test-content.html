@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>上传触发更新（精准）</title>
+    <style> 
+        h2 { color: #2196F3; text-align: center; margin-bottom: 20px; }
+        p { line-height: 1.8; margin: 10px 0; }
+        button { padding: 8px 16px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h2>仅上传文件时才更新的内容</h2>
+    <p>✅ 不上传文件：服务器不监听、不推送</p>
+    <p>✅ 上传文件到GitHub：服务器立即推送更新</p>
+    <p>✅ 刷新页面：内容不丢（本地存储）</p>
+    <button onclick="alert('精准更新生效！上传新文件试试')">点击测试</button>
+</body>
+</html>
