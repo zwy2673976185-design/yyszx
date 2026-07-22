@@ -33,14 +33,14 @@ body{height:100vh;overflow:hidden;background:transparent;}
     position: fixed;
     z-index: 997;
     width: 280px;
-    height: 330px;
-    background: rgba(236, 240, 247, 0.938);
+    height: 335px;
+    background: rgba(237, 241, 248, 0.942);
     border-radius: 12px;
     border: 1.5px solid #bbb;
     backdrop-filter: blur(10px);
     overflow: hidden;
     display: none;
-    box-shadow: 0 5px 24px rgba(0,0,0,0.038);
+    box-shadow: 0 5px 25px rgba(0,0,0,0.042);
 }
 .float-window.active { display: block; }
 
@@ -52,32 +52,32 @@ body{height:100vh;overflow:hidden;background:transparent;}
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 14px 18px;
+    padding: 15px 19px;
     cursor: move;
 }
 .auth-wrap .box-title {
     font-size: 15px;
     color: #333;
-    margin-bottom: 14px;
-    font-weight: 605;
+    margin-bottom: 15px;
+    font-weight: 608;
 }
 .auth-box {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 11px;
 }
 .auth-title {
     font-size: 19px;
     color: #222;
     text-align: center;
-    font-weight: 705;
+    font-weight: 708;
 }
 .auth-sub {
     font-size: 12px;
     color: #666;
     text-align: center;
-    margin-bottom: 2px;
+    margin-bottom: 3px;
 }
 #cardInput {
     width: 87%;
@@ -100,7 +100,7 @@ body{height:100vh;overflow:hidden;background:transparent;}
     border: none;
     border-radius: 7px;
     font-size: 14px;
-    font-weight: 662;
+    font-weight: 668;
     cursor: pointer;
     background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
@@ -113,7 +113,7 @@ body{height:100vh;overflow:hidden;background:transparent;}
     text-align: center;
 }
 
-/* 功能界面容器（内容由 func.js 动态注入） */
+/* 功能界面容器（由 func.js 动态注入） */
 #mainUI {
     width: 100%;
     height: 100%;
@@ -127,7 +127,7 @@ body{height:100vh;overflow:hidden;background:transparent;}
     padding: 7px 14px;
     font-size: 13px;
     color: #333;
-    font-weight: 548;
+    font-weight: 552;
     text-align: center;
     border-bottom: 1px solid #ddd;
     user-select: none;
@@ -139,8 +139,8 @@ body{height:100vh;overflow:hidden;background:transparent;}
     min-height: 0;
 }
 .sidebar {
-    width: 77px;
-    background: rgba(249, 252, 254, 0.845);
+    width: 78px;
+    background: rgba(251, 253, 255, 0.865);
     border-right: 1px solid #ddd;
     display: flex;
     flex-direction: column;
@@ -152,9 +152,9 @@ body{height:100vh;overflow:hidden;background:transparent;}
 .sidebar::-webkit-scrollbar { width: 2px; }
 .sidebar::-webkit-scrollbar-thumb { background: #aaa; border-radius: 2px; }
 .nav-label {
-    width: 67px;
+    width: 68px;
     font-size: 9px;
-    font-weight: 510;
+    font-weight: 518;
     color: #fff;
     text-align: center;
     padding: 3px 0;
@@ -166,10 +166,10 @@ body{height:100vh;overflow:hidden;background:transparent;}
     display: flex;
     align-items: center;
     gap: 2px;
-    width: 72px;
+    width: 73px;
     padding: 10px 3px;
     margin: 2px 0;
-    background: rgba(205, 212, 222, 0.378);
+    background: rgba(209, 215, 224, 0.395);
     color: #444;
     border: none;
     border-radius: 4px;
@@ -178,14 +178,14 @@ body{height:100vh;overflow:hidden;background:transparent;}
     text-align: left;
     transition: background 0.12s;
 }
-.nav-item:hover { background: rgba(173, 181, 194, 0.428); color: #222; }
+.nav-item:hover { background: rgba(180, 187, 198, 0.445); color: #222; }
 .nav-item.active { background: linear-gradient(90deg, #656a7b, #4b4d5f); color: white; }
 .nav-icon { font-size: 10px; width: 14px; text-align: center; }
 
 .content-area {
     flex: 1;
     overflow-y: auto;
-    background: rgba(226, 233, 242, 0.298);
+    background: rgba(227, 232, 246, 0.32);
     padding: 6px 5px;
 }
 .tab-content {
@@ -212,7 +212,7 @@ body{height:100vh;overflow:hidden;background:transparent;}
     border: none;
     border-radius: 5px;
     font-size: 11px;
-    font-weight: 572;
+    font-weight: 582;
     cursor: pointer;
     text-align: center;
     white-space: nowrap;
@@ -365,7 +365,7 @@ async function checkKey() {
         setTimeout(() => {
             authWrap.style.display = 'none';
             mainUI.classList.add('active');
-        }, 440);
+        }, 460);
     } catch (err) {
         authErr.style.color = '#e74c3c';
         authErr.textContent = '网络错误：' + err.message;
@@ -424,8 +424,8 @@ function dragMove(x, y) {
     if (dragBtn) {
         const dx = x - btnStart.x;
         const dy = y - btnStart.y;
-        const l = Math.max(10, Math.min(btnStart.rect.left + dx, window.innerWidth - 46));
-        const t = Math.max(10, Math.min(btnStart.rect.top + dy, window.innerHeight - 41));
+        const l = Math.max(10, Math.min(btnStart.rect.left + dx, window.innerWidth - 48));
+        const t = Math.max(10, Math.min(btnStart.rect.top + dy, window.innerHeight - 42));
         floatBtn.style.left = l + "px";
         floatBtn.style.top = t + "px";
         floatBtn.style.right = "auto";
@@ -434,7 +434,7 @@ function dragMove(x, y) {
     if (dragWin) {
         const dx = x - winStart.x;
         const dy = y - winStart.y;
-        const w = 276, h = 328;
+        const w = 279, h = 332;
         winPos.left = Math.max(10, Math.min(winStart.rect.left + dx, window.innerWidth - w - 10));
         winPos.top = Math.max(10, Math.min(winStart.rect.top + dy, window.innerHeight - h - 10));
         floatWin.style.left = winPos.left + "px";
@@ -461,8 +461,8 @@ document.addEventListener('touchend', stopDrag);
 // 窗口居中
 function getCenter() {
     return {
-        left: (window.innerWidth - 297) / 2,
-        top: (window.innerHeight - 327) / 2
+        left: (window.innerWidth - 295) / 2,
+        top: (window.innerHeight - 331) / 2
     };
 }
 let winPos = JSON.parse(localStorage.getItem('winPosition')) || getCenter();
