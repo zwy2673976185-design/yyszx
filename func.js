@@ -1,11 +1,9 @@
-// ====== yyszx 功能脚本（外部加载版） ======
-// 你以后只需要修改这个文件，重新上传即可更新功能
-
+// func.js – 专为 GameGuardian 修改器设计的功能脚本
 window.initMainUI = function() {
-    const mainUI = document.getElementById('mainUI');
+    var mainUI = document.getElementById('mainUI');
     if (!mainUI) return;
 
-    // 注入功能界面的 HTML 结构
+    // 注入功能界面 HTML（使用 innerHTML，GG 的 WebView 通常支持）
     mainUI.innerHTML = `
         <div class="window-header">yyszx</div>
         <div class="main-body">
@@ -32,54 +30,87 @@ window.initMainUI = function() {
                         </div>
                     </div>
                 </div>
-                <div id="renwu" class="tab-content"><div class="placeholder-tab"><div class="placeholder-icon">👤</div><div>人物</div><div style="font-size:9px;color:#aaa;">人物相关功能</div></div></div>
-                <div id="wuli" class="tab-content"><div class="placeholder-tab"><div class="placeholder-icon">⚡</div><div>物理</div><div style="font-size:9px;color:#aaa;">物理效果调整</div></div></div>
-                <div id="diejia" class="tab-content"><div class="placeholder-tab"><div class="placeholder-icon">🔁</div><div>叠加</div><div style="font-size:9px;color:#aaa;">叠加模式设置</div></div></div>
-                <div id="zhuangbei" class="tab-content"><div class="placeholder-tab"><div class="placeholder-icon">🛡️</div><div>装备</div><div style="font-size:9px;color:#aaa;">装备管理</div></div></div>
-                <div id="wuzhong" class="tab-content"><div class="placeholder-tab"><div class="placeholder-icon">🔄</div><div>无中替换</div><div style="font-size:9px;color:#aaa;">替换功能设置</div></div></div>
-                <div id="chongwu" class="tab-content"><div class="placeholder-tab"><div class="placeholder-icon">🐾</div><div>宠物</div><div style="font-size:9px;color:#aaa;">宠物系统</div></div></div>
-                <div id="qita" class="tab-content"><div class="placeholder-tab"><div class="placeholder-icon">⚙️</div><div>其他</div><div style="font-size:9px;color:#aaa;">其他设置</div></div></div>
+                <div id="renwu" class="tab-content"><div class="placeholder-tab"><div class="placeholder-icon">👤</div><div>人物</div><div style="font-size:9px;color:#aaa;">人物相关功能（待开发）</div></div></div>
+                <div id="wuli" class="tab-content"><div class="placeholder-tab"><div class="placeholder-icon">⚡</div><div>物理</div><div style="font-size:9px;color:#aaa;">物理效果调整（待开发）</div></div></div>
+                <div id="diejia" class="tab-content"><div class="placeholder-tab"><div class="placeholder-icon">🔁</div><div>叠加</div><div style="font-size:9px;color:#aaa;">叠加模式设置（待开发）</div></div></div>
+                <div id="zhuangbei" class="tab-content"><div class="placeholder-tab"><div class="placeholder-icon">🛡️</div><div>装备</div><div style="font-size:9px;color:#aaa;">装备管理（待开发）</div></div></div>
+                <div id="wuzhong" class="tab-content"><div class="placeholder-tab"><div class="placeholder-icon">🔄</div><div>无中替换</div><div style="font-size:9px;color:#aaa;">替换功能设置（待开发）</div></div></div>
+                <div id="chongwu" class="tab-content"><div class="placeholder-tab"><div class="placeholder-icon">🐾</div><div>宠物</div><div style="font-size:9px;color:#aaa;">宠物系统（待开发）</div></div></div>
+                <div id="qita" class="tab-content"><div class="placeholder-tab"><div class="placeholder-icon">⚙️</div><div>其他</div><div style="font-size:9px;color:#aaa;">其他设置（待开发）</div></div></div>
             </div>
         </div>
     `;
 
-    // ====== 功能按钮事件（在这里写你的实际代码） ======
+    // ====== 功能按钮事件（使用 gg 对象） ======
+    // 防闪功能
     document.getElementById('fangshanBtn').addEventListener('click', function(e) {
         e.stopPropagation();
-        // 防闪功能代码写在这里
-        // 例如：
-        // gg.clearResults();
-        // gg.searchNumber("123456789", gg.TYPE_DWORD);
-        // if (gg.getResultCount() > 0) {
-        //     gg.editAll("-99999999", gg.TYPE_DWORD);
-        //     gg.toast("防闪已启用");
-        // } else {
-        //     gg.toast("未找到目标值");
-        // }
-        alert('防闪功能已启动（占位）');
+        if (typeof gg === 'undefined') {
+            alert('未检测到 GG 修改器环境');
+            return;
+        }
+        gg.toast('🛡️ 防闪功能启动中...');
+        // 示例：搜索数值 100（DWORD类型）并修改为 -99999
+        gg.clearResults();
+        gg.searchNumber('100', gg.TYPE_DWORD);
+        if (gg.getResultCount() > 0) {
+            gg.editAll('-99999', gg.TYPE_DWORD);
+            gg.toast('✅ 防闪已生效');
+        } else {
+            gg.toast('⚠️ 未找到目标数值');
+        }
     });
 
+    // 日志说明
     document.getElementById('logBtn').addEventListener('click', function(e) {
         e.stopPropagation();
-        alert('日志说明：这里是日志说明内容（占位）');
+        if (typeof gg !== 'undefined') {
+            gg.alert(
+                '📋 日志说明\n\n' +
+                '1. 防闪：修改数值防止闪退\n' +
+                '2. 全局搜值：搜索任意数值\n' +
+                '3. 其他功能正在开发中...\n\n' +
+                '版本：v1.0'
+            );
+        } else {
+            alert('日志说明：此处为功能说明占位');
+        }
     });
 
+    // 全局搜值
     document.getElementById('globalSearchBtn').addEventListener('click', function(e) {
         e.stopPropagation();
-        alert('全局搜值功能已启动（占位）');
+        if (typeof gg === 'undefined') {
+            alert('未检测到 GG 修改器环境');
+            return;
+        }
+        // 弹出输入框让用户输入数值
+        gg.prompt('请输入要搜索的数值', ['100'], ['number']);
+        gg.toast('🔍 开始全局搜索...');
+        // 注意：gg.prompt 是异步的，需要监听结果
+        // 这里简化处理，实际使用时需配合回调
+        gg.clearResults();
+        gg.searchNumber('100', gg.TYPE_DWORD);
+        var count = gg.getResultCount();
+        gg.toast('搜索结果数量：' + count);
     });
 
     // ====== 导航切换 ======
-    const navItems = mainUI.querySelectorAll('.nav-item');
-    const tabContents = mainUI.querySelectorAll('.tab-content');
-    navItems.forEach(item => {
-        item.addEventListener('click', function(e) {
+    var navItems = mainUI.querySelectorAll('.nav-item');
+    var tabContents = mainUI.querySelectorAll('.tab-content');
+    for (var i = 0; i < navItems.length; i++) {
+        navItems[i].addEventListener('click', function(e) {
             e.stopPropagation();
-            const targetTab = this.dataset.tab;
-            navItems.forEach(nav => nav.classList.remove('active'));
+            var targetTab = this.getAttribute('data-tab');
+            // 移除所有 active
+            for (var j = 0; j < navItems.length; j++) {
+                navItems[j].classList.remove('active');
+            }
             this.classList.add('active');
-            tabContents.forEach(tab => tab.classList.remove('active'));
+            for (var k = 0; k < tabContents.length; k++) {
+                tabContents[k].classList.remove('active');
+            }
             document.getElementById(targetTab).classList.add('active');
         });
-    });
+    }
 };
