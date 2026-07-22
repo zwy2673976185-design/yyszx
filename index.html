@@ -8,242 +8,49 @@
 /* ========== 完整 UI 样式 ========== */
 *{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft YaHei",sans-serif;}
 body{height:100vh;overflow:hidden;background:transparent;}
-
-.float-btn {
-    position: fixed;
-    z-index: 9999;
-    width: 52px;
-    height: 52px;
-    cursor: pointer;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-    background-image: url(https://i.imgs.ovh/2025/09/28/75fraO.jpeg);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    padding: 0;
-    margin: 0;
-    border: none;
-    right: 24px;
-    bottom: 36px;
-}
-.float-btn:active { opacity: 0.8; }
-
-.float-window {
-    position: fixed;
-    z-index: 997;
-    width: 280px;
-    height: 335px;
-    background: rgba(237, 241, 248, 0.942);
-    border-radius: 12px;
-    border: 1.5px solid #bbb;
-    backdrop-filter: blur(10px);
-    overflow: hidden;
-    display: none;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.042);
-}
-.float-window.active { display: block; }
-
-/* 验证界面 */
-.auth-wrap {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 15px 19px;
-    cursor: move;
-}
-.auth-wrap .box-title {
-    font-size: 15px;
-    color: #333;
-    margin-bottom: 15px;
-    font-weight: 608;
-}
-.auth-box {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 11px;
-}
-.auth-title {
-    font-size: 19px;
-    color: #222;
-    text-align: center;
-    font-weight: 708;
-}
-.auth-sub {
-    font-size: 12px;
-    color: #666;
-    text-align: center;
-    margin-bottom: 3px;
-}
-#cardInput {
-    width: 87%;
-    margin: 0 auto;
-    padding: 9px 12px;
-    border-radius: 7px;
-    border: 1px solid #ddd;
-    background: #f5f5f5;
-    color: #333;
-    font-size: 15px;
-    text-align: center;
-    letter-spacing: 2px;
-    outline: none;
-}
-#cardInput::placeholder { color: transparent; }
-#verifyBtn {
-    width: 91%;
-    margin: 0 auto;
-    padding: 9px;
-    border: none;
-    border-radius: 7px;
-    font-size: 14px;
-    font-weight: 668;
-    cursor: pointer;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-}
-#verifyBtn:active { opacity: 0.8; }
-#verifyBtn:disabled { opacity: 0.6; cursor: not-allowed; }
-#authErr {
-    height: 18px;
-    font-size: 12px;
-    text-align: center;
-}
-
-/* 功能界面容器（由 func.js 动态注入） */
-#mainUI {
-    width: 100%;
-    height: 100%;
-    display: none;
-    flex-direction: column;
-    cursor: move;
-}
-#mainUI.active { display: flex; }
-
-.window-header {
-    padding: 7px 14px;
-    font-size: 13px;
-    color: #333;
-    font-weight: 552;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-    user-select: none;
-    flex-shrink: 0;
-}
-.main-body {
-    display: flex;
-    flex: 1;
-    min-height: 0;
-}
-.sidebar {
-    width: 78px;
-    background: rgba(251, 253, 255, 0.865);
-    border-right: 1px solid #ddd;
-    display: flex;
-    flex-direction: column;
-    padding: 5px 0;
-    align-items: center;
-    flex-shrink: 0;
-    overflow-y: auto;
-}
-.sidebar::-webkit-scrollbar { width: 2px; }
-.sidebar::-webkit-scrollbar-thumb { background: #aaa; border-radius: 2px; }
-.nav-label {
-    width: 68px;
-    font-size: 9px;
-    font-weight: 518;
-    color: #fff;
-    text-align: center;
-    padding: 3px 0;
-    margin-bottom: 3px;
-    background: linear-gradient(90deg, #787, #556);
-    border-radius: 3px;
-}
-.nav-item {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    width: 73px;
-    padding: 10px 3px;
-    margin: 2px 0;
-    background: rgba(209, 215, 224, 0.395);
-    color: #444;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 9px;
-    text-align: left;
-    transition: background 0.12s;
-}
-.nav-item:hover { background: rgba(180, 187, 198, 0.445); color: #222; }
-.nav-item.active { background: linear-gradient(90deg, #656a7b, #4b4d5f); color: white; }
-.nav-icon { font-size: 10px; width: 14px; text-align: center; }
-
-.content-area {
-    flex: 1;
-    overflow-y: auto;
-    background: rgba(227, 232, 246, 0.32);
-    padding: 6px 5px;
-}
-.tab-content {
-    display: none;
-    height: 97%;
-}
-.tab-content.active { display: block; }
-
-.home-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    justify-content: flex-start;
-    padding: 4px 0;
-}
-.home-row {
-    display: flex;
-    gap: 5px;
-    justify-content: center;
-}
-.home-btn {
-    flex: 1;
-    padding: 12px 2px;
-    border: none;
-    border-radius: 5px;
-    font-size: 11px;
-    font-weight: 582;
-    cursor: pointer;
-    text-align: center;
-    white-space: nowrap;
-    background: #fff;
-    color: #333;
-    border: 1px solid #ddd;
-}
-.home-btn:active { background: #ececec; }
-
-.placeholder-tab {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 96%;
-    color: #777;
-    font-size: 12px;
-}
-.placeholder-icon { font-size: 28px; margin-bottom: 5px; }
-
-.content-area::-webkit-scrollbar { width: 2px; }
-.content-area::-webkit-scrollbar-track { background: transparent; }
-.content-area::-webkit-scrollbar-thumb { background: #656a7b; border-radius: 2px; }
+.float-btn{position:fixed;z-index:9999;width:52px;height:52px;cursor:pointer;-webkit-tap-highlight-color:transparent;background-image:url(https://i.imgs.ovh/2025/09/28/75fraO.jpeg);background-size:cover;background-position:center;background-repeat:no-repeat;padding:0;margin:0;border:none;right:24px;bottom:36px;}
+.float-btn:active{opacity:.8;}
+.float-window{position:fixed;z-index:997;width:285px;height:340px;background:rgba(238,241,248,.945);border-radius:12px;border:1.5px solid #bbb;backdrop-filter:blur(10px);overflow:hidden;display:none;box-shadow:0 5px 25px rgba(0,0,0,.05);}
+.float-window.active{display:block;}
+.auth-wrap{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px 20px;cursor:move;}
+.auth-wrap .box-title{font-size:16px;color:#333;margin-bottom:16px;font-weight:610;}
+.auth-box{width:100%;display:flex;flex-direction:column;gap:12px;}
+.auth-title{font-size:20px;color:#222;text-align:center;font-weight:710;}
+.auth-sub{font-size:12px;color:#666;text-align:center;margin-bottom:4px;}
+#cardInput{width:88%;margin:0 auto;padding:10px 14px;border-radius:8px;border:1px solid #ddd;background:#f5f5f5;color:#333;font-size:15px;text-align:center;letter-spacing:2px;outline:none;}
+#verifyBtn{width:92%;margin:0 auto;padding:10px;border:none;border-radius:8px;font-size:15px;font-weight:670;cursor:pointer;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;}
+#verifyBtn:active{opacity:.8;}
+#verifyBtn:disabled{opacity:.6;cursor:not-allowed;}
+#authErr{height:20px;font-size:12px;text-align:center;}
+#mainUI{width:100%;height:100%;display:none;flex-direction:column;cursor:move;}
+#mainUI.active{display:flex;}
+.window-header{padding:8px 14px;font-size:13px;color:#333;font-weight:555;text-align:center;border-bottom:1px solid #ddd;user-select:none;flex-shrink:0;}
+.main-body{display:flex;flex:1;min-height:0;}
+.sidebar{width:80px;background:rgba(250,253,255,.875);border-right:1px solid #ddd;display:flex;flex-direction:column;padding:6px 0;align-items:center;flex-shrink:0;overflow-y:auto;}
+.sidebar::-webkit-scrollbar{width:2px;}
+.sidebar::-webkit-scrollbar-thumb{background:#aaa;border-radius:2px;}
+.nav-label{width:70px;font-size:9px;font-weight:520;color:#fff;text-align:center;padding:3px 0;margin-bottom:4px;background:linear-gradient(90deg,#787,#556);border-radius:3px;}
+.nav-item{display:flex;align-items:center;gap:2px;width:73px;padding:10px 3px;margin:2px 0;background:rgba(211,217,226,.402);color:#444;border:none;border-radius:4px;cursor:pointer;font-size:9px;text-align:left;transition:background .12s;}
+.nav-item:hover{background:rgba(182,189,199,.452);color:#222;}
+.nav-item.active{background:linear-gradient(90deg,#656a7b,#4b4d5f);color:#fff;}
+.nav-icon{font-size:10px;width:14px;text-align:center;}
+.content-area{flex:1;overflow-y:auto;background:rgba(231,236,247,.34);padding:6px 5px;}
+.tab-content{display:none;height:97%;}
+.tab-content.active{display:block;}
+.home-buttons{display:flex;flex-direction:column;gap:6px;padding:4px 0;}
+.home-row{display:flex;gap:5px;justify-content:center;}
+.home-btn{flex:1;padding:12px 2px;border:none;border-radius:5px;font-size:11px;font-weight:585;cursor:pointer;text-align:center;white-space:nowrap;background:#fff;color:#333;border:1px solid #ddd;}
+.home-btn:active{background:#ececec;}
+.placeholder-tab{display:flex;flex-direction:column;align-items:center;justify-content:center;height:96%;color:#777;font-size:12px;}
+.placeholder-icon{font-size:29px;margin-bottom:6px;}
+.content-area::-webkit-scrollbar{width:2px;}
+.content-area::-webkit-scrollbar-track{background:transparent;}
+.content-area::-webkit-scrollbar-thumb{background:#656a7b;border-radius:2px;}
 </style>
 </head>
 <body>
-
 <button class="float-btn" id="floatBtn"></button>
-
 <div class="float-window" id="floatWin">
-    <!-- 验证界面 -->
     <div class="auth-wrap" id="authWrap">
         <div class="box-title">yyszx</div>
         <div class="auth-box">
@@ -254,30 +61,21 @@ body{height:100vh;overflow:hidden;background:transparent;}
             <div id="authErr"></div>
         </div>
     </div>
-
-    <!-- 功能界面容器（由 func.js 填充） -->
     <div id="mainUI"></div>
 </div>
-
 <script>
-// ====== 后端 API 地址 ======
 const API_URL = "https://yyszx.vercel.app/api/verify";
-
-// ====== 外部功能脚本地址（你以后只更新这个文件） ======
 const FUNC_JS_URL = "https://yyszx.vercel.app/func.js";
 
-// ====== 设备 ID ======
-function getDeviceId() {
-    let deviceId = localStorage.getItem('device_uuid');
-    if (!deviceId) {
-        deviceId = 'DEV_' + crypto.randomUUID().replace(/-/g, '').substring(0, 12).toUpperCase();
-        localStorage.setItem('device_uuid', deviceId);
+function getDeviceId(){
+    let d = localStorage.getItem('device_uuid');
+    if(!d){
+        d = 'DEV_' + crypto.randomUUID().replace(/-/g,'').substring(0,12).toUpperCase();
+        localStorage.setItem('device_uuid', d);
     }
-    return deviceId;
+    return d;
 }
 const DEVICE_ID = getDeviceId();
-
-// ====== DOM ======
 const floatBtn = document.getElementById('floatBtn');
 const floatWin = document.getElementById('floatWin');
 const authWrap = document.getElementById('authWrap');
@@ -286,33 +84,39 @@ const cardInput = document.getElementById('cardInput');
 const verifyBtn = document.getElementById('verifyBtn');
 const authErr = document.getElementById('authErr');
 
-// 自动填充上次卡密
 const savedCard = localStorage.getItem('bound_card');
-if (savedCard) {
-    cardInput.value = savedCard;
+if(savedCard) cardInput.value = savedCard;
+
+// ====== 用 fetch 加载 func.js 并执行 ======
+async function loadAndRunFunc() {
+    try {
+        const resp = await fetch(FUNC_JS_URL + '?t=' + Date.now());
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        const code = await resp.text();
+        // 使用 eval 执行（在 GG 的 WebView 中通常可用）
+        eval(code);
+        // 检查是否定义了 initMainUI
+        if (typeof window.initMainUI === 'function') {
+            window.initMainUI();
+            return true;
+        } else {
+            throw new Error('initMainUI 未定义');
+        }
+    } catch (e) {
+        console.error('加载 func.js 失败:', e);
+        return false;
+    }
 }
 
-// ====== 加载外部功能脚本 ======
-function loadFuncScript() {
-    return new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = FUNC_JS_URL + '?t=' + Date.now();
-        script.onload = resolve;
-        script.onerror = reject;
-        document.head.appendChild(script);
-    });
-}
-
-// ====== 验证 ======
-async function checkKey() {
+async function checkKey(){
     authErr.textContent = '';
-    const val = cardInput.value.trim().toUpperCase();
-    if (!val) {
+    const v = cardInput.value.trim().toUpperCase();
+    if(!v){
         authErr.style.color = '#e74c3c';
         authErr.textContent = '请输入卡密';
         return;
     }
-    if (val.length !== 16) {
+    if(v.length !== 16){
         authErr.style.color = '#e74c3c';
         authErr.textContent = '卡密不存在或已失效';
         cardInput.value = '';
@@ -320,41 +124,27 @@ async function checkKey() {
     }
     verifyBtn.disabled = true;
     verifyBtn.textContent = '验证中...';
-
-    try {
-        const response = await fetch(API_URL, {
+    try{
+        const r = await fetch(API_URL, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ card: val, deviceId: DEVICE_ID })
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({card:v, deviceId:DEVICE_ID})
         });
-        const result = await response.json();
-
-        if (!result.success) {
+        const d = await r.json();
+        if(!d.success){
             authErr.style.color = '#e74c3c';
-            authErr.textContent = result.message || '卡密不存在或已失效';
+            authErr.textContent = d.message || '卡密不存在或已失效';
             cardInput.value = '';
             return;
         }
-
-        localStorage.setItem('bound_card', val);
+        localStorage.setItem('bound_card', v);
         localStorage.setItem('bound_device', DEVICE_ID);
-
         authErr.style.color = '#27ae60';
         authErr.textContent = '✅ 验证成功';
 
-        // 加载外部功能脚本
-        try {
-            await loadFuncScript();
-            if (typeof window.initMainUI === 'function') {
-                window.initMainUI();
-            } else {
-                authErr.style.color = '#e74c3c';
-                authErr.textContent = '功能加载失败：脚本未正确加载';
-                verifyBtn.disabled = false;
-                verifyBtn.textContent = '验证';
-                return;
-            }
-        } catch (e) {
+        // 加载并执行 func.js
+        const ok = await loadAndRunFunc();
+        if(!ok){
             authErr.style.color = '#e74c3c';
             authErr.textContent = '功能加载失败，请检查网络';
             verifyBtn.disabled = false;
@@ -365,10 +155,10 @@ async function checkKey() {
         setTimeout(() => {
             authWrap.style.display = 'none';
             mainUI.classList.add('active');
-        }, 460);
-    } catch (err) {
+        }, 420);
+    } catch(e){
         authErr.style.color = '#e74c3c';
-        authErr.textContent = '网络错误：' + err.message;
+        authErr.textContent = '网络错误：' + e.message;
     } finally {
         verifyBtn.disabled = false;
         verifyBtn.textContent = '验证';
@@ -377,79 +167,66 @@ async function checkKey() {
 
 verifyBtn.addEventListener('click', checkKey);
 cardInput.addEventListener('keydown', e => e.key === 'Enter' && checkKey());
+floatBtn.addEventListener('click', () => floatWin.classList.toggle('active'));
 
-// ====== 悬浮球开关 ======
-floatBtn.addEventListener('click', () => {
-    floatWin.classList.toggle('active');
-});
-
-// ====== 拖拽 ======
-let dragBtn = false;
-let btnStart = null;
+// ====== 拖拽代码保持不变 ======
+let dragBtn = false, btnStart = null;
 floatBtn.addEventListener('mousedown', e => {
     dragBtn = true;
-    btnStart = {x:e.clientX, y:e.clientY, rect: floatBtn.getBoundingClientRect()};
+    btnStart = {x:e.clientX, y:e.clientY, rect:floatBtn.getBoundingClientRect()};
     e.preventDefault();
 });
 floatBtn.addEventListener('touchstart', e => {
     if(e.touches.length !== 1) return;
     dragBtn = true;
     const t = e.touches[0];
-    btnStart = {x:t.clientX, y:t.clientY, rect: floatBtn.getBoundingClientRect()};
+    btnStart = {x:t.clientX, y:t.clientY, rect:floatBtn.getBoundingClientRect()};
 });
-
-let dragWin = false;
-let winStart = null;
-
-function startDrag(e, clientX, clientY) {
-    const target = e.target;
-    if (target.tagName === 'INPUT' || target.tagName === 'BUTTON') return;
+let dragWin = false, winStart = null;
+function startDrag(e, x, y){
+    const t = e.target;
+    if(t.tagName === 'INPUT' || t.tagName === 'BUTTON') return;
     dragWin = true;
-    winStart = {x:clientX, y:clientY, rect: floatWin.getBoundingClientRect()};
+    winStart = {x:x, y:y, rect:floatWin.getBoundingClientRect()};
     e.preventDefault();
 }
-
 document.addEventListener('mousedown', e => {
-    if (!floatWin.contains(e.target)) return;
+    if(!floatWin.contains(e.target)) return;
     startDrag(e, e.clientX, e.clientY);
 });
 document.addEventListener('touchstart', e => {
-    if (!floatWin.contains(e.target)) return;
-    if (e.touches.length !== 1) return;
-    const touch = e.touches[0];
-    startDrag(e, touch.clientX, touch.clientY);
+    if(!floatWin.contains(e.target)) return;
+    if(e.touches.length !== 1) return;
+    const t = e.touches[0];
+    startDrag(e, t.clientX, t.clientY);
 });
-
-function dragMove(x, y) {
-    if (dragBtn) {
-        const dx = x - btnStart.x;
-        const dy = y - btnStart.y;
-        const l = Math.max(10, Math.min(btnStart.rect.left + dx, window.innerWidth - 48));
-        const t = Math.max(10, Math.min(btnStart.rect.top + dy, window.innerHeight - 42));
-        floatBtn.style.left = l + "px";
-        floatBtn.style.top = t + "px";
-        floatBtn.style.right = "auto";
-        floatBtn.style.bottom = "auto";
+function dragMove(x, y){
+    if(dragBtn){
+        const dx = x - btnStart.x, dy = y - btnStart.y;
+        const l = Math.max(10, Math.min(btnStart.rect.left + dx, window.innerWidth - 50));
+        const t = Math.max(10, Math.min(btnStart.rect.top + dy, window.innerHeight - 45));
+        floatBtn.style.left = l + 'px';
+        floatBtn.style.top = t + 'px';
+        floatBtn.style.right = 'auto';
+        floatBtn.style.bottom = 'auto';
     }
-    if (dragWin) {
-        const dx = x - winStart.x;
-        const dy = y - winStart.y;
-        const w = 279, h = 332;
+    if(dragWin){
+        const dx = x - winStart.x, dy = y - winStart.y;
+        const w = 283, h = 343;
         winPos.left = Math.max(10, Math.min(winStart.rect.left + dx, window.innerWidth - w - 10));
         winPos.top = Math.max(10, Math.min(winStart.rect.top + dy, window.innerHeight - h - 10));
-        floatWin.style.left = winPos.left + "px";
-        floatWin.style.top = winPos.top + "px";
+        floatWin.style.left = winPos.left + 'px';
+        floatWin.style.top = winPos.top + 'px';
         localStorage.setItem('winPosition', JSON.stringify(winPos));
     }
 }
 document.addEventListener('mousemove', e => dragMove(e.clientX, e.clientY));
 document.addEventListener('touchmove', e => {
-    if (e.touches.length !== 1) return;
-    const touch = e.touches[0];
-    dragMove(touch.clientX, touch.clientY);
+    if(e.touches.length !== 1) return;
+    const t = e.touches[0];
+    dragMove(t.clientX, t.clientY);
 });
-
-function stopDrag() {
+function stopDrag(){
     dragBtn = false;
     dragWin = false;
     btnStart = null;
@@ -457,17 +234,12 @@ function stopDrag() {
 }
 document.addEventListener('mouseup', stopDrag);
 document.addEventListener('touchend', stopDrag);
-
-// 窗口居中
-function getCenter() {
-    return {
-        left: (window.innerWidth - 295) / 2,
-        top: (window.innerHeight - 331) / 2
-    };
+function getCenter(){
+    return {left: (window.innerWidth - 303)/2, top: (window.innerHeight - 345)/2};
 }
 let winPos = JSON.parse(localStorage.getItem('winPosition')) || getCenter();
-floatWin.style.left = winPos.left + "px";
-floatWin.style.top = winPos.top + "px";
+floatWin.style.left = winPos.left + 'px';
+floatWin.style.top = winPos.top + 'px';
 </script>
 </body>
 </html>
