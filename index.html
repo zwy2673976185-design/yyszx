@@ -33,14 +33,14 @@ body{height:100vh;overflow:hidden;background:transparent;}
     position: fixed;
     z-index: 997;
     width: 280px;
-    height: 320px;
-    background: rgba(236, 240, 247, 0.935);
+    height: 330px;
+    background: rgba(236, 240, 247, 0.938);
     border-radius: 12px;
     border: 1.5px solid #bbb;
     backdrop-filter: blur(10px);
     overflow: hidden;
     display: none;
-    box-shadow: 0 5px 24px rgba(0,0,0,0.035);
+    box-shadow: 0 5px 24px rgba(0,0,0,0.038);
 }
 .float-window.active { display: block; }
 
@@ -59,7 +59,7 @@ body{height:100vh;overflow:hidden;background:transparent;}
     font-size: 15px;
     color: #333;
     margin-bottom: 14px;
-    font-weight: 602;
+    font-weight: 605;
 }
 .auth-box {
     width: 100%;
@@ -71,7 +71,7 @@ body{height:100vh;overflow:hidden;background:transparent;}
     font-size: 19px;
     color: #222;
     text-align: center;
-    font-weight: 702;
+    font-weight: 705;
 }
 .auth-sub {
     font-size: 12px;
@@ -80,7 +80,7 @@ body{height:100vh;overflow:hidden;background:transparent;}
     margin-bottom: 2px;
 }
 #cardInput {
-    width: 86%;
+    width: 87%;
     margin: 0 auto;
     padding: 9px 12px;
     border-radius: 7px;
@@ -94,13 +94,13 @@ body{height:100vh;overflow:hidden;background:transparent;}
 }
 #cardInput::placeholder { color: transparent; }
 #verifyBtn {
-    width: 90%;
+    width: 91%;
     margin: 0 auto;
     padding: 9px;
     border: none;
     border-radius: 7px;
     font-size: 14px;
-    font-weight: 658;
+    font-weight: 662;
     cursor: pointer;
     background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
@@ -113,7 +113,7 @@ body{height:100vh;overflow:hidden;background:transparent;}
     text-align: center;
 }
 
-/* 功能界面 */
+/* 功能界面容器（内容由 func.js 动态注入） */
 #mainUI {
     width: 100%;
     height: 100%;
@@ -127,7 +127,7 @@ body{height:100vh;overflow:hidden;background:transparent;}
     padding: 7px 14px;
     font-size: 13px;
     color: #333;
-    font-weight: 545;
+    font-weight: 548;
     text-align: center;
     border-bottom: 1px solid #ddd;
     user-select: none;
@@ -140,7 +140,7 @@ body{height:100vh;overflow:hidden;background:transparent;}
 }
 .sidebar {
     width: 77px;
-    background: rgba(249, 252, 254, 0.835);
+    background: rgba(249, 252, 254, 0.845);
     border-right: 1px solid #ddd;
     display: flex;
     flex-direction: column;
@@ -154,7 +154,7 @@ body{height:100vh;overflow:hidden;background:transparent;}
 .nav-label {
     width: 67px;
     font-size: 9px;
-    font-weight: 507;
+    font-weight: 510;
     color: #fff;
     text-align: center;
     padding: 3px 0;
@@ -169,7 +169,7 @@ body{height:100vh;overflow:hidden;background:transparent;}
     width: 72px;
     padding: 10px 3px;
     margin: 2px 0;
-    background: rgba(208, 215, 223, 0.365);
+    background: rgba(205, 212, 222, 0.378);
     color: #444;
     border: none;
     border-radius: 4px;
@@ -178,14 +178,14 @@ body{height:100vh;overflow:hidden;background:transparent;}
     text-align: left;
     transition: background 0.12s;
 }
-.nav-item:hover { background: rgba(176, 183, 196, 0.415); color: #222; }
+.nav-item:hover { background: rgba(173, 181, 194, 0.428); color: #222; }
 .nav-item.active { background: linear-gradient(90deg, #656a7b, #4b4d5f); color: white; }
 .nav-icon { font-size: 10px; width: 14px; text-align: center; }
 
 .content-area {
     flex: 1;
     overflow-y: auto;
-    background: rgba(229, 235, 243, 0.275);
+    background: rgba(226, 233, 242, 0.298);
     padding: 6px 5px;
 }
 .tab-content {
@@ -212,7 +212,7 @@ body{height:100vh;overflow:hidden;background:transparent;}
     border: none;
     border-radius: 5px;
     font-size: 11px;
-    font-weight: 568;
+    font-weight: 572;
     cursor: pointer;
     text-align: center;
     white-space: nowrap;
@@ -231,7 +231,7 @@ body{height:100vh;overflow:hidden;background:transparent;}
     color: #777;
     font-size: 12px;
 }
-.placeholder-icon { font-size: 26px; margin-bottom: 5px; }
+.placeholder-icon { font-size: 28px; margin-bottom: 5px; }
 
 .content-area::-webkit-scrollbar { width: 2px; }
 .content-area::-webkit-scrollbar-track { background: transparent; }
@@ -255,48 +255,16 @@ body{height:100vh;overflow:hidden;background:transparent;}
         </div>
     </div>
 
-    <!-- 功能界面（直接内嵌，不再依赖外部JS） -->
-    <div id="mainUI">
-        <div class="window-header">yyszx</div>
-        <div class="main-body">
-            <div class="sidebar">
-                <div class="nav-label">yyszx</div>
-                <button class="nav-item active" data-tab="home"><span class="nav-icon">🏠</span><span>主菜单</span></button>
-                <button class="nav-item" data-tab="renwu"><span class="nav-icon">👤</span><span>人物</span></button>
-                <button class="nav-item" data-tab="wuli"><span class="nav-icon">⚡</span><span>物理</span></button>
-                <button class="nav-item" data-tab="diejia"><span class="nav-icon">🔁</span><span>叠加</span></button>
-                <button class="nav-item" data-tab="zhuangbei"><span class="nav-icon">🛡️</span><span>装备</span></button>
-                <button class="nav-item" data-tab="wuzhong"><span class="nav-icon">🔄</span><span>无中替换</span></button>
-                <button class="nav-item" data-tab="chongwu"><span class="nav-icon">🐾</span><span>宠物</span></button>
-                <button class="nav-item" data-tab="qita"><span class="nav-icon">⚙️</span><span>其他</span></button>
-            </div>
-            <div class="content-area">
-                <div id="home" class="tab-content active">
-                    <div class="home-buttons">
-                        <div class="home-row">
-                            <button class="home-btn" id="fangshanBtn">🛡️ 防闪</button>
-                            <button class="home-btn" id="logBtn">📋 日志说明</button>
-                        </div>
-                        <div class="home-row">
-                            <button class="home-btn" id="globalSearchBtn">🔍 全局搜值</button>
-                        </div>
-                    </div>
-                </div>
-                <div id="renwu" class="tab-content"><div class="placeholder-tab"><div class="placeholder-icon">👤</div><div>人物</div><div style="font-size:9px;color:#aaa;">人物相关功能</div></div></div>
-                <div id="wuli" class="tab-content"><div class="placeholder-tab"><div class="placeholder-icon">⚡</div><div>物理</div><div style="font-size:9px;color:#aaa;">物理效果调整</div></div></div>
-                <div id="diejia" class="tab-content"><div class="placeholder-tab"><div class="placeholder-icon">🔁</div><div>叠加</div><div style="font-size:9px;color:#aaa;">叠加模式设置</div></div></div>
-                <div id="zhuangbei" class="tab-content"><div class="placeholder-tab"><div class="placeholder-icon">🛡️</div><div>装备</div><div style="font-size:9px;color:#aaa;">装备管理</div></div></div>
-                <div id="wuzhong" class="tab-content"><div class="placeholder-tab"><div class="placeholder-icon">🔄</div><div>无中替换</div><div style="font-size:9px;color:#aaa;">替换功能设置</div></div></div>
-                <div id="chongwu" class="tab-content"><div class="placeholder-tab"><div class="placeholder-icon">🐾</div><div>宠物</div><div style="font-size:9px;color:#aaa;">宠物系统</div></div></div>
-                <div id="qita" class="tab-content"><div class="placeholder-tab"><div class="placeholder-icon">⚙️</div><div>其他</div><div style="font-size:9px;color:#aaa;">其他设置</div></div></div>
-            </div>
-        </div>
-    </div>
+    <!-- 功能界面容器（由 func.js 填充） -->
+    <div id="mainUI"></div>
 </div>
 
 <script>
 // ====== 后端 API 地址 ======
 const API_URL = "https://yyszx.vercel.app/api/verify";
+
+// ====== 外部功能脚本地址（你以后只更新这个文件） ======
+const FUNC_JS_URL = "https://yyszx.vercel.app/func.js";
 
 // ====== 设备 ID ======
 function getDeviceId() {
@@ -322,6 +290,17 @@ const authErr = document.getElementById('authErr');
 const savedCard = localStorage.getItem('bound_card');
 if (savedCard) {
     cardInput.value = savedCard;
+}
+
+// ====== 加载外部功能脚本 ======
+function loadFuncScript() {
+    return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = FUNC_JS_URL + '?t=' + Date.now();
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+    });
 }
 
 // ====== 验证 ======
@@ -357,17 +336,36 @@ async function checkKey() {
             return;
         }
 
-        // 保存认证状态
         localStorage.setItem('bound_card', val);
         localStorage.setItem('bound_device', DEVICE_ID);
 
         authErr.style.color = '#27ae60';
         authErr.textContent = '✅ 验证成功';
-        
+
+        // 加载外部功能脚本
+        try {
+            await loadFuncScript();
+            if (typeof window.initMainUI === 'function') {
+                window.initMainUI();
+            } else {
+                authErr.style.color = '#e74c3c';
+                authErr.textContent = '功能加载失败：脚本未正确加载';
+                verifyBtn.disabled = false;
+                verifyBtn.textContent = '验证';
+                return;
+            }
+        } catch (e) {
+            authErr.style.color = '#e74c3c';
+            authErr.textContent = '功能加载失败，请检查网络';
+            verifyBtn.disabled = false;
+            verifyBtn.textContent = '验证';
+            return;
+        }
+
         setTimeout(() => {
             authWrap.style.display = 'none';
             mainUI.classList.add('active');
-        }, 420);
+        }, 440);
     } catch (err) {
         authErr.style.color = '#e74c3c';
         authErr.textContent = '网络错误：' + err.message;
@@ -383,25 +381,6 @@ cardInput.addEventListener('keydown', e => e.key === 'Enter' && checkKey());
 // ====== 悬浮球开关 ======
 floatBtn.addEventListener('click', () => {
     floatWin.classList.toggle('active');
-});
-
-// ====== 功能按钮事件 ======
-document.getElementById('fangshanBtn').addEventListener('click', e => { e.stopPropagation(); alert('防闪功能已启动（占位）'); });
-document.getElementById('logBtn').addEventListener('click', e => { e.stopPropagation(); alert('日志说明：这里是日志说明内容（占位）'); });
-document.getElementById('globalSearchBtn').addEventListener('click', e => { e.stopPropagation(); alert('全局搜值功能已启动（占位）'); });
-
-// ====== 导航切换 ======
-const navItems = document.querySelectorAll('.nav-item');
-const tabContents = document.querySelectorAll('.tab-content');
-navItems.forEach(item => {
-    item.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const targetTab = this.dataset.tab;
-        navItems.forEach(nav => nav.classList.remove('active'));
-        this.classList.add('active');
-        tabContents.forEach(tab => tab.classList.remove('active'));
-        document.getElementById(targetTab).classList.add('active');
-    });
 });
 
 // ====== 拖拽 ======
@@ -445,8 +424,8 @@ function dragMove(x, y) {
     if (dragBtn) {
         const dx = x - btnStart.x;
         const dy = y - btnStart.y;
-        const l = Math.max(10, Math.min(btnStart.rect.left + dx, window.innerWidth - 48));
-        const t = Math.max(10, Math.min(btnStart.rect.top + dy, window.innerHeight - 42));
+        const l = Math.max(10, Math.min(btnStart.rect.left + dx, window.innerWidth - 46));
+        const t = Math.max(10, Math.min(btnStart.rect.top + dy, window.innerHeight - 41));
         floatBtn.style.left = l + "px";
         floatBtn.style.top = t + "px";
         floatBtn.style.right = "auto";
@@ -455,7 +434,7 @@ function dragMove(x, y) {
     if (dragWin) {
         const dx = x - winStart.x;
         const dy = y - winStart.y;
-        const w = 278, h = 325;
+        const w = 276, h = 328;
         winPos.left = Math.max(10, Math.min(winStart.rect.left + dx, window.innerWidth - w - 10));
         winPos.top = Math.max(10, Math.min(winStart.rect.top + dy, window.innerHeight - h - 10));
         floatWin.style.left = winPos.left + "px";
@@ -482,8 +461,8 @@ document.addEventListener('touchend', stopDrag);
 // 窗口居中
 function getCenter() {
     return {
-        left: (window.innerWidth - 296) / 2,
-        top: (window.innerHeight - 324) / 2
+        left: (window.innerWidth - 297) / 2,
+        top: (window.innerHeight - 327) / 2
     };
 }
 let winPos = JSON.parse(localStorage.getItem('winPosition')) || getCenter();
