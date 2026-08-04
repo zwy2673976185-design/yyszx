@@ -1,8 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_floatwing/flutter_floatwing.dart';
+import 'package:flutter_overlay_window/flutter_overlay_window.dart';
+import 'package:dio/dio.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
+
+// Github CDN读取tiny.json
+const String configUrl = "https://cdn.jsdelivr.net/gh/zwy2673976185-design/yyy/tiny.json";
+late String localConfigPath;
 
 void main() {
-  runApp(const MaterialApp(home: HomePage(), debugShowCheckedModeBanner: false));
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'yyszx',
+      theme: ThemeData.dark(),
+      home: const HomePage(),
+    );
+  }
 }
 
 class HomePage extends StatefulWidget {
@@ -13,69 +33,42 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Window? floatWin;
+
+  @override
+  void initState() {
+    super.initState();
+    initPath();
+  }
+
+  Future<void> initPath() async{
+    final dir = await getExternalStorageDirectory();
+    localConfigPath = "${dir!.path}/tiny.json";
+  }
+
+  //启动悬浮窗
+  Future<void> startOverlay() async {
+    bool perm = await FlutterOverlayWindow.isPermissionGranted();
+    if(!perm){
+      await FlutterOverlayWindow.requestPermission();
+      return;
+    }
+    await FlutterOverlayWindow.showOverlay(
+      enableDrag: true,
+      width: 380,
+      height: 480,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("悬浮窗控制")),
+      appBar: AppBar(title: const Text("yyszx主程序")),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: startFloat,
-              child: const Text("打开悬浮球"),
-            ),
-            const SizedBox(height:12),
-            ElevatedButton(
-              onPressed: stopFloat,
-              child: const Text("关闭悬浮球"),
-            ),
-          ],
+        child: ElevatedButton(
+          onPressed: startOverlay,
+          child: const Text("打开悬浮窗口"),
         ),
       ),
     );
-  }
-
-  Future<void> startFloat() async {
-    bool ok = await FlutterFloatwing.requestPermission();
-    if(!ok){
-      if(mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:Text("悬浮权限未开启")));
-      return;
-    }
-
-    floatWin = await FlutterFloatwing.createWindow(
-      id:"float1",
-      width:220,
-      height:280,
-      x:60,
-      y:220,
-      draggable:true,
-      resizable:true,
-      child:MaterialApp(
-        home:Scaffold(
-          backgroundColor:Colors.black87,
-          body:Padding(
-            padding:const EdgeInsets.all(12),
-            child:Column(
-              children: [
-                const Text("悬浮面板",style:TextStyle(color:Colors.white,fontSize:16)),
-                const SizedBox(height:10),
-                ElevatedButton(onPressed:()async{await stopFloat();}, child:const Text("关闭窗口"))
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-    await floatWin?.show();
-  }
-
-  Future<void> stopFloat()async{
-    if(floatWin!=null){
-      await floatWin?.close();
-      floatWin=null;
-    }
   }
 }
