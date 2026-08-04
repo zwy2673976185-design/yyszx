@@ -1,5 +1,5 @@
 name: yyszx
-description: "yyszx悬浮壳程序"
+description: yyszx App
 version: 1.0.0+1
 
 environment:
@@ -8,9 +8,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  #flutter_overlay_window: ^0.4.3
-  dio: ^5.4.0
-  path_provider: ^2.1.2
+  dio: ^5.11.0
+  path_provider: ^2.1.4
 
 flutter:
   uses-material-design: true
