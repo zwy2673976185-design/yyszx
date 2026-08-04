@@ -1,5 +1,5 @@
 def localProperties = new Properties()
-def localPropertiesFile = rootProject.file('local.properties')
+def localPropertiesFile = rootProject.file('localProperties')
 if (localPropertiesFile.exists()) {
     localPropertiesFile.withReader('UTF-8') { reader ->
         localProperties.load(reader)
@@ -7,16 +7,16 @@ if (localPropertiesFile.exists()) {
 }
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
-    throw new Exception("Flutter SDK not found.")
+    throw new Exception("Flutter SDK not found")
 }
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 android {
-    compileSdk 34
+    compileSdk 33
     defaultConfig {
         applicationId "com.example.yyszx"
         minSdk 21
-        targetSdk 34
+        targetSdk 33
         versionCode 1
         versionName "1.0.0"
     }
