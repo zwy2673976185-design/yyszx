@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_overlay_window/flutter_overlay_window.dart';
+import 'package:dio/dio.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 
-// 关闭远程云端链接，全部使用本地文件
-late String localConfigPath;
+const String configUrl = "https://yyszx-1375389211.cos.ap-shanghai.myqcloud.com/tiny.json";
 
 void main() {
   runApp(const MyApp());
@@ -31,40 +30,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-  @override
-  void initState() {
-    super.initState();
-    initPath();
-  }
-
-  Future<void> initPath() async{
-    final dir = await getExternalStorageDirectory();
-    localConfigPath = "${dir!.path}/tiny.json";
-  }
-
-  //启动悬浮窗
-  Future<void> startOverlay() async {
-    bool perm = await FlutterOverlayWindow.isPermissionGranted();
-    if(!perm){
-      await FlutterOverlayWindow.requestPermission();
-      return;
-    }
-    await FlutterOverlayWindow.showOverlay(
-      enableDrag: true,
-      width: 380,
-      height: 480,
-    );
-  }
+  String logText = "启动完成，本地模式";
+  String localPath = "/storage/emulated/0/写着玩/yyszx_app/";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("yyszx主程序【本地版】")),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: startOverlay,
-          child: const Text("打开悬浮窗口"),
+      appBar: AppBar(title: const Text("yyszx")),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("本地路径：$localPath"),
+            const SizedBox(height:12),
+            Expanded(child: SingleChildScrollView(child:Text(logText))),
+          ],
         ),
       ),
     );
