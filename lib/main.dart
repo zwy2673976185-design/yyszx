@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_window/flutter_overlay_window.dart';
-import 'package:dio/dio.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 
-// Github CDN读取tiny.json
-const String configUrl = "https://cdn.jsdelivr.net/gh/zwy2673976185-design/yyy/tiny.json";
+// 关闭远程云端链接，全部使用本地文件
 late String localConfigPath;
 
 void main() {
@@ -62,7 +60,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("yyszx主程序")),
+      appBar: AppBar(title: const Text("yyszx主程序【本地版】")),
       body: Center(
         child: ElevatedButton(
           onPressed: startOverlay,
